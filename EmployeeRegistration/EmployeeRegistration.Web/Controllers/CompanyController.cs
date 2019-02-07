@@ -11,7 +11,12 @@ namespace EmployeeRegistration.Web.Controllers
 {
     public class CompanyController : Controller
     {
-        CompanyService companyService = new CompanyService();
+        private readonly CompanyService companyService;
+
+        public CompanyController()
+        {
+            companyService = new CompanyService();
+        }
 
         public IActionResult Index()
         {

@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -45,11 +46,14 @@
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="Repositories\EmployeeRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\EmployeeRegistration.Data.Contracts\EmployeeRegistration.Data.Contracts.csproj">
       <Project>{923aa0cb-93c1-47ff-b8ab-bbd4ddbe4500}</Project>
       <Name>EmployeeRegistration.Data.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EmployeeRegistration.Infrastructure\EmployeeRegistration.Infrastructure.csproj">
+      <Project>{A508AE43-D6D6-4D13-AD2D-6956813E16A9}</Project>
+      <Name>EmployeeRegistration.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

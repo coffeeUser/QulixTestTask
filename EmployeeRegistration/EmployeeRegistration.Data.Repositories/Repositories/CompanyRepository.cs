@@ -1,5 +1,6 @@
 ﻿using EmployeeRegistration.Data.Contracts.Entities;
 using EmployeeRegistration.Data.Contracts.Repositories;
+using EmployeeRegistration.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,31 +11,36 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
 {
     public class CompanyRepository : ICompanyRepository
     {
-        string connectionString = "Server=.\\SQLEXPRESS;Database=EmployeeRegistrationDb;Trusted_Connection=True;MultipleActiveResultSets=true";
-
         public IEnumerable<Company> GetAll()
         {
             List<Company> companies = new List<Company>();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Consts.ConnectionString))
             {
                 SqlCommand command = new SqlCommand("GetAllCompanies", connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
+                try
                 {
-                    Company company = new Company();
-                    company.Id = Convert.ToInt32(reader["Id"]);
-                    company.Name = reader["Name"].ToString();
-                    company.Size = Convert.ToInt32(reader["Size"]);
-                    company.Form = reader["Form"].ToString();
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
 
-                    companies.Add(company);
+                    while (reader.Read())
+                    {
+                        Company company = new Company();
+                        company.Id = Convert.ToInt32(reader["Id"]);
+                        company.Name = reader["Name"].ToString();
+                        company.Size = Convert.ToInt32(reader["Size"]);
+                        company.Form = reader["Form"].ToString();
+
+                        companies.Add(company);
+                    }
                 }
-                connection.Close();
+
+                finally
+                {
+                    connection.Close();
+                }
 
                 return companies;
             }
@@ -42,7 +48,7 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
 
         public void Add(Company company)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Consts.ConnectionString))
             {
                 SqlCommand command = new SqlCommand("AddCompany", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -51,15 +57,22 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
                 command.Parameters.AddWithValue("@Size", 0);
                 command.Parameters.AddWithValue("@Form", company.Form);
 
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+
+                finally
+                {
+                    connection.Close();
+                }
             }
         }
 
         public void Update(Company company)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Consts.ConnectionString))
             {
                 SqlCommand command = new SqlCommand("UpdateCompany", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -69,9 +82,16 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
                 command.Parameters.AddWithValue("@Size", company.Size);
                 command.Parameters.AddWithValue("@Form", company.Form);
 
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+
+                finally
+                {
+                    connection.Close();
+                }
             }
         }
 
@@ -79,24 +99,31 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
         {
             Company company = new Company();
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Consts.ConnectionString))
             {
                 StringBuilder sqlQuery = new StringBuilder("SELECT * FROM Companies WHERE ID=");
                 sqlQuery.Append(id);
 
                 SqlCommand command = new SqlCommand(sqlQuery.ToString(), connection);
 
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
+                try
                 {
-                    company.Id = Convert.ToInt32(reader["Id"]);
-                    company.Name = reader["Name"].ToString();
-                    company.Size = Convert.ToInt32(reader["Size"]);
-                    company.Form = reader["Form"].ToString();
+                    connection.Open();
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        company.Id = Convert.ToInt32(reader["Id"]);
+                        company.Name = reader["Name"].ToString();
+                        company.Size = Convert.ToInt32(reader["Size"]);
+                        company.Form = reader["Form"].ToString();
+                    }
                 }
-                connection.Close();
+
+                finally
+                {
+                    connection.Close();
+                }
 
                 return company;
             }
@@ -104,14 +131,22 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
 
         public void Delete(int? id)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(Consts.ConnectionString))
             {
                 SqlCommand command = new SqlCommand("DeleteCompany", connection);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@Id", id);
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
+
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+
+                finally
+                {
+                    connection.Close();
+                }
             }
         }
     }

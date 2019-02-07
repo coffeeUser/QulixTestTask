@@ -1,19 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using EmployeeRegistration.Domain.Contracts.ViewModels;
 using EmployeeRegistration.Domain.Services.Services;
-using EmployeeRegistration.Web.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EmployeeRegistration.Web.Controllers
 {
     public class EmployeeController : Controller
     {
-        EmployeeService employeeService = new EmployeeService();
-        CompanyService companyService = new CompanyService();
+        private readonly EmployeeService employeeService;
+        private readonly CompanyService companyService;
+
+        public EmployeeController()
+        {
+            employeeService = new EmployeeService();
+            companyService = new CompanyService();
+        }
 
         public IActionResult Index()
         {
@@ -26,7 +28,14 @@ namespace EmployeeRegistration.Web.Controllers
         {
             List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
             employees = employeeService.GetCompanyEmployees(id).ToList();
-            return View(employees);
+            return View("Index", employees);
+        }
+
+        public IActionResult PositionEmployees(string position)
+        {
+            List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
+            employees = employeeService.GetEmployeesByPosition(position).ToList();
+            return View("Index", employees);
         }
 
         [HttpGet]

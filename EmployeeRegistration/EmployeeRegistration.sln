@@ -15,6 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeRegistration.Domain
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeRegistration.Infrastructure", "EmployeeRegistration.Infrastructure\EmployeeRegistration.Infrastructure.csproj", "{A508AE43-D6D6-4D13-AD2D-6956813E16A9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmployeeRegistration.Database", "EmployeeRegistration.Database", "{2469A886-D296-42EB-860C-8FAB7F091A27}"
+	ProjectSection(SolutionItems) = preProject
+		..\EmployeeRegistration.Database\CreateDatabase.sql = ..\EmployeeRegistration.Database\CreateDatabase.sql
+		..\EmployeeRegistration.Database\CreateProcedure.sql = ..\EmployeeRegistration.Database\CreateProcedure.sql
+		..\EmployeeRegistration.Database\TestData.sql = ..\EmployeeRegistration.Database\TestData.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

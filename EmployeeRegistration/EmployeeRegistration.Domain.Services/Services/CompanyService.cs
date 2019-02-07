@@ -12,7 +12,14 @@ namespace EmployeeRegistration.Domain.Services.Services
 {
     public class CompanyService : ICompanyService
     {
-        CompanyRepository companyRepository = new CompanyRepository();
+        private readonly CompanyRepository companyRepository;
+        private readonly EmployeeRepository employeeRepository;
+
+        public CompanyService()
+        {
+            companyRepository = new CompanyRepository();
+            employeeRepository = new EmployeeRepository();
+        }
 
         public IEnumerable<CompanyViewModel> GetAll()
         {
@@ -72,6 +79,14 @@ namespace EmployeeRegistration.Domain.Services.Services
 
         public void Delete(int? id)
         {
+            IEnumerable<Employee> employees = employeeRepository.GetCompanyEmployees(id);
+            if (employees.Count() > 0)
+            {
+                foreach (Employee employee in employees)
+                {
+                    employeeRepository.Delete(employee.Id);
+                }
+            }
             companyRepository.Delete(id);
         }
     }

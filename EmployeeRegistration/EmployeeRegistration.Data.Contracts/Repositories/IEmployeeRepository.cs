@@ -10,5 +10,6 @@ namespace EmployeeRegistration.Data.Contracts.Repositories
     public interface IEmployeeRepository : IRepository<Employee>
     {
         IEnumerable<Employee> GetCompanyEmployees(int? companyId);
+        IEnumerable<Employee> GetEmployeesByPosition(string position);
     }
 }

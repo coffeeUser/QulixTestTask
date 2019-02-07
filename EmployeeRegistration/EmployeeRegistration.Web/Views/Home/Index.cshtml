@@ -2,7 +2,15 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div>
-    <a asp-action="Index" asp-controller="Company">Companies</a>
-    <a asp-action="Index" asp-controller="Employee">Employees</a>
+<div class="row" style="margin-top:100px; margin-bottom:100px">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-3" style="text-align:center">
+        <a asp-action="Index" asp-controller="Company" class="btn btn-default">Companies</a>
+    </div>
+    <div class="col-sm-3" style="text-align:center">
+        <a asp-action="Index" asp-controller="Employee" class="btn btn-default">Employees</a>
+    </div>
+    <div class="col-sm-3">
+    </div>
 </div>

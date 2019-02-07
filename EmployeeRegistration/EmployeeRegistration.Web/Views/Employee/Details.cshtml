@@ -38,7 +38,7 @@
             @Html.DisplayNameFor(model => model.Position)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Position)
+            <a asp-action="PositionEmployees" asp-controller="Employee" asp-route-position="@Model.Position">@Html.DisplayFor(model => model.Position)</a>
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Company)
@@ -49,6 +49,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-default">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-default">Edit</a>
 </div>

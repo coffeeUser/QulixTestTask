@@ -8,8 +8,14 @@ namespace EmployeeRegistration.Domain.Services.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        EmployeeRepository employeeRepository = new EmployeeRepository();
-        CompanyRepository companyRepository = new CompanyRepository();
+        private readonly EmployeeRepository employeeRepository;
+        private readonly CompanyRepository companyRepository;
+
+        public EmployeeService()
+        {
+            employeeRepository = new EmployeeRepository();
+            companyRepository = new CompanyRepository();
+        }
 
         public IEnumerable<EmployeeViewModel> GetAll()
         {
@@ -57,7 +63,7 @@ namespace EmployeeRegistration.Domain.Services.Services
 
             employeeRepository.Add(employee);
             Company company = companyRepository.Get(model.CompanyId);
-            company.Size = company.Size + 1;
+            company.Size = ++company.Size;
             companyRepository.Update(company);
         }
 
@@ -67,10 +73,10 @@ namespace EmployeeRegistration.Domain.Services.Services
             if (model.CompanyId != employeeEntity.CompanyId)
             {
                 Company company = companyRepository.Get(employeeEntity.CompanyId);
-                company.Size = company.Size - 1;
+                company.Size = --company.Size;
                 companyRepository.Update(company);
                 company = companyRepository.Get(model.CompanyId);
-                company.Size = company.Size + 1;
+                company.Size = ++company.Size;
                 companyRepository.Update(company);
             }
             Employee employee = new Employee()
@@ -90,6 +96,37 @@ namespace EmployeeRegistration.Domain.Services.Services
         public IEnumerable<EmployeeViewModel> GetCompanyEmployees(int? companyId)
         {
             IEnumerable<Employee> employees = employeeRepository.GetCompanyEmployees(companyId);
+            List<EmployeeViewModel> employeeViewModels = new List<EmployeeViewModel>();
+
+            foreach (var employee in employees)
+            {
+                EmployeeViewModel employeeViewModel = new EmployeeViewModel()
+                {
+                    Id = employee.Id,
+                    Name = employee.Name,
+                    Surname = employee.Surname,
+                    SecondName = employee.SecondName,
+                    Date = employee.Date,
+                    Position = employee.Position,
+                    CompanyId = employee.CompanyId
+                };
+                Company company = companyRepository.Get(employee.CompanyId);
+                employeeViewModel.Company = new CompanyViewModel()
+                {
+                    Id = company.Id,
+                    Name = company.Name,
+                    Size = company.Size,
+                    Form = company.Form
+                };
+                employeeViewModels.Add(employeeViewModel);
+            }
+
+            return employeeViewModels;
+        }
+
+        public IEnumerable<EmployeeViewModel> GetEmployeesByPosition(string position)
+        {
+            IEnumerable<Employee> employees = employeeRepository.GetEmployeesByPosition(position);
             List<EmployeeViewModel> employeeViewModels = new List<EmployeeViewModel>();
 
             foreach (var employee in employees)
@@ -146,7 +183,7 @@ namespace EmployeeRegistration.Domain.Services.Services
         {
             Employee employee = employeeRepository.Get(id);
             Company company = companyRepository.Get(employee.CompanyId);
-            company.Size = company.Size - 1;
+            company.Size = --company.Size;
             companyRepository.Update(company);
             employeeRepository.Delete(id);
         }
