@@ -11,9 +11,11 @@ namespace EmployeeRegistration.Domain.Contracts.ViewModels
     {
         public int Id { get; set; }
         [Required]
+        [MaxLength(20)]
         public string Name { get; set; }
         public int Size { get; set; }
         [Required]
+        [MaxLength(20)]
         public string Form { get; set; }
     }
 }
