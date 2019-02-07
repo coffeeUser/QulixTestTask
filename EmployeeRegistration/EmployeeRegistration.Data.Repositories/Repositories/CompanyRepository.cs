@@ -8,7 +8,7 @@ using System.Text;
 
 namespace EmployeeRegistration.Data.Repositories.Repositories
 {
-    public class CompanyRepository : IRepository<Company>
+    public class CompanyRepository : ICompanyRepository
     {
         string connectionString = "Server=.\\SQLEXPRESS;Database=EmployeeRegistrationDb;Trusted_Connection=True;MultipleActiveResultSets=true";
 
@@ -29,14 +29,7 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
                     Company company = new Company();
                     company.Id = Convert.ToInt32(reader["Id"]);
                     company.Name = reader["Name"].ToString();
-                    if (company.Size != 0)
-                    {
-                        company.Size = Convert.ToInt32(reader["Size"]);
-                    }
-                    else
-                    {
-                        company.Size = 0;
-                    }
+                    company.Size = Convert.ToInt32(reader["Size"]);
                     company.Form = reader["Form"].ToString();
 
                     companies.Add(company);
@@ -55,6 +48,7 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
                 command.CommandType = CommandType.StoredProcedure;
 
                 command.Parameters.AddWithValue("@Name", company.Name);
+                command.Parameters.AddWithValue("@Size", 0);
                 command.Parameters.AddWithValue("@Form", company.Form);
 
                 connection.Open();
@@ -99,14 +93,7 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
                 {
                     company.Id = Convert.ToInt32(reader["Id"]);
                     company.Name = reader["Name"].ToString();
-                    if (company.Size != 0)
-                    {
-                        company.Size = Convert.ToInt32(reader["Size"]);
-                    }
-                    else
-                    {
-                        company.Size = 0;
-                    }
+                    company.Size = Convert.ToInt32(reader["Size"]);
                     company.Form = reader["Form"].ToString();
                 }
                 connection.Close();

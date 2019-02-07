@@ -14,5 +14,7 @@
 /EmployeeRegistration/EmployeeRegistration.Domain.Contracts/obj
 /EmployeeRegistration/EmployeeRegistration.Domain.Services/bin
 /EmployeeRegistration/EmployeeRegistration.Domain.Services/obj
+/EmployeeRegistration/EmployeeRegistration.Infrastructure/bin
+/EmployeeRegistration/EmployeeRegistration.Infrastructure/obj
 /EmployeeRegistration/EmployeeRegistration.Web/bin
 /EmployeeRegistration/EmployeeRegistration.Web/obj

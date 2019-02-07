@@ -6,12 +6,14 @@ using EmployeeRegistration.Domain.Contracts.ViewModels;
 using EmployeeRegistration.Domain.Services.Services;
 using EmployeeRegistration.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EmployeeRegistration.Web.Controllers
 {
     public class EmployeeController : Controller
     {
         EmployeeService employeeService = new EmployeeService();
+        CompanyService companyService = new CompanyService();
 
         public IActionResult Index()
         {
@@ -20,9 +22,17 @@ namespace EmployeeRegistration.Web.Controllers
             return View(employees);
         }
 
+        public IActionResult CompanyEmployees(int? id)
+        {
+            List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
+            employees = employeeService.GetCompanyEmployees(id).ToList();
+            return View(employees);
+        }
+
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Companies = companyService.GetAll();
             return View();
         }
 
@@ -50,6 +60,7 @@ namespace EmployeeRegistration.Web.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Companies = companyService.GetAll();
             return View(employee);
         }
         [HttpPost]

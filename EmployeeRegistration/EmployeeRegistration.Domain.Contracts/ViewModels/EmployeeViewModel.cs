@@ -16,10 +16,12 @@ namespace EmployeeRegistration.Domain.Contracts.ViewModels
         public string Surname { get; set; }
         [Required]
         public string SecondName { get; set; }
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         [Required]
         public string Position { get; set; }
         [Required]
         public int CompanyId { get; set; }
+        public CompanyViewModel Company { get; set; }
     }
 }

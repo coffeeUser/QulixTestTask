@@ -8,7 +8,7 @@ using System.Text;
 
 namespace EmployeeRegistration.Data.Repositories.Repositories
 {
-    public class EmployeeRepository : IRepository<Employee>
+    public class EmployeeRepository : IEmployeeRepository
     {
         string connectionString = "Server=.\\SQLEXPRESS;Database=EmployeeRegistrationDb;Trusted_Connection=True;MultipleActiveResultSets=true";
 
@@ -84,6 +84,39 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
             }
         }
 
+        public IEnumerable<Employee> GetCompanyEmployees(int? companyId)
+        {
+            List<Employee> employees = new List<Employee>();
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("GetCompanyEmployees", connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@CompanyId", companyId);
+
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Employee employee = new Employee();
+                    employee.Id = Convert.ToInt32(reader["Id"]);
+                    employee.Name = reader["Name"].ToString();
+                    employee.Surname = reader["Surname"].ToString();
+                    employee.SecondName = reader["SecondName"].ToString();
+                    employee.Date = Convert.ToDateTime(reader["Date"]);
+                    employee.Position = reader["Position"].ToString();
+                    employee.CompanyId = Convert.ToInt32(reader["CompanyId"]);
+
+                    employees.Add(employee);
+                }
+                connection.Close();
+
+                return employees;
+            }
+        }
+
         public Employee Get(int? id)
         {
             Employee employee = new Employee();
@@ -109,7 +142,6 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
                     employee.CompanyId = Convert.ToInt32(reader["CompanyId"]);
                 }
                 connection.Close();
-
                 return employee;
             }
         }

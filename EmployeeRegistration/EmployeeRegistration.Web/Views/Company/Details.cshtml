@@ -20,7 +20,7 @@
             @Html.DisplayNameFor(model => model.Size)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Size)
+            <a asp-action="CompanyEmployees" asp-controller="Employee" asp-route-id="@Model.Id">@Html.DisplayFor(model => model.Size)</a>
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Form)
