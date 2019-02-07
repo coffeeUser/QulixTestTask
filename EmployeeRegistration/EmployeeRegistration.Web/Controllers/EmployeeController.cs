@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EmployeeRegistration.Domain.Contracts.ViewModels;
+using EmployeeRegistration.Domain.Services.Services;
 using EmployeeRegistration.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +11,12 @@ namespace EmployeeRegistration.Web.Controllers
 {
     public class EmployeeController : Controller
     {
-        EmployeeRepository employeeRepository = new EmployeeRepository();
+        EmployeeService employeeService = new EmployeeService();
 
         public IActionResult Index()
         {
-            List<Employee> employees = new List<Employee>();
-            employees = employeeRepository.GetAllEmployees().ToList();
+            List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
+            employees = employeeService.GetAll().ToList();
             return View(employees);
         }
 
@@ -26,11 +28,11 @@ namespace EmployeeRegistration.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] Employee employee)
+        public IActionResult Create([Bind] EmployeeViewModel employee)
         {
             if (ModelState.IsValid)
             {
-                employeeRepository.AddEmployee(employee);
+                employeeService.Add(employee);
                 return RedirectToAction("Index");
             }
             return View(employee);
@@ -43,7 +45,7 @@ namespace EmployeeRegistration.Web.Controllers
             {
                 return NotFound();
             }
-            Employee employee = employeeRepository.GetEmployee(id);
+            EmployeeViewModel employee = employeeService.Get(id);
             if (employee == null)
             {
                 return NotFound();
@@ -52,7 +54,7 @@ namespace EmployeeRegistration.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind]Employee employee)
+        public IActionResult Edit(int id, [Bind]EmployeeViewModel employee)
         {
             if (id != employee.Id)
             {
@@ -60,7 +62,7 @@ namespace EmployeeRegistration.Web.Controllers
             }
             if (ModelState.IsValid)
             {
-                employeeRepository.UpdateEmployee(employee);
+                employeeService.Update(employee);
                 return RedirectToAction("Index");
             }
             return View(employee);
@@ -73,7 +75,7 @@ namespace EmployeeRegistration.Web.Controllers
             {
                 return NotFound();
             }
-            Employee employee = employeeRepository.GetEmployee(id);
+            EmployeeViewModel employee = employeeService.Get(id);
             if (employee == null)
             {
                 return NotFound();
@@ -88,7 +90,7 @@ namespace EmployeeRegistration.Web.Controllers
             {
                 return NotFound();
             }
-            Employee employee = employeeRepository.GetEmployee(id);
+            EmployeeViewModel employee = employeeService.Get(id);
             if (employee == null)
             {
                 return NotFound();
@@ -100,7 +102,7 @@ namespace EmployeeRegistration.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)
         {
-            employeeRepository.DeleteEmployee(id);
+            employeeService.Delete(id);
             return RedirectToAction("Index");
         }
     }

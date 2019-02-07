@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EmployeeRegistration.Domain.Contracts.ViewModels;
+using EmployeeRegistration.Domain.Services.Services;
 using EmployeeRegistration.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +11,12 @@ namespace EmployeeRegistration.Web.Controllers
 {
     public class CompanyController : Controller
     {
-        CompanyRepository companyRepository = new CompanyRepository();
+        CompanyService companyService = new CompanyService();
 
         public IActionResult Index()
         {
-            List<Company> companies = new List<Company>();
-            companies = companyRepository.GetAllCompanies().ToList();
+            List<CompanyViewModel> companies = new List<CompanyViewModel>();
+            companies = companyService.GetAll().ToList();
             return View(companies);
         }
 
@@ -26,11 +28,11 @@ namespace EmployeeRegistration.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind] Company company)
+        public IActionResult Create([Bind] CompanyViewModel company)
         {
             if (ModelState.IsValid)
             {
-                companyRepository.AddCompany(company);
+                companyService.Add(company);
                 return RedirectToAction("Index");
             }
             return View(company);
@@ -43,7 +45,7 @@ namespace EmployeeRegistration.Web.Controllers
             {
                 return NotFound();
             }
-            Company company = companyRepository.GetCompany(id);
+            CompanyViewModel company = companyService.Get(id);
             if (company == null)
             {
                 return NotFound();
@@ -52,7 +54,7 @@ namespace EmployeeRegistration.Web.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind]Company company)
+        public IActionResult Edit(int id, [Bind]CompanyViewModel company)
         {
             if (id != company.Id)
             {
@@ -60,7 +62,7 @@ namespace EmployeeRegistration.Web.Controllers
             }
             if (ModelState.IsValid)
             {
-                companyRepository.UpdateCompany(company);
+                companyService.Update(company);
                 return RedirectToAction("Index");
             }
             return View(company);
@@ -73,7 +75,7 @@ namespace EmployeeRegistration.Web.Controllers
             {
                 return NotFound();
             }
-            Company company = companyRepository.GetCompany(id);
+            CompanyViewModel company = companyService.Get(id);
             if (company == null)
             {
                 return NotFound();
@@ -88,7 +90,7 @@ namespace EmployeeRegistration.Web.Controllers
             {
                 return NotFound();
             }
-            Company company = companyRepository.GetCompany(id);
+            CompanyViewModel company = companyService.Get(id);
             if (company == null)
             {
                 return NotFound();
@@ -100,7 +102,7 @@ namespace EmployeeRegistration.Web.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int? id)
         {
-            companyRepository.DeleteCompany(id);
+            companyService.Delete(id);
             return RedirectToAction("Index");
         }
     }

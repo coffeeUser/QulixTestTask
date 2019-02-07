@@ -1,17 +1,18 @@
-﻿using System;
+﻿using EmployeeRegistration.Data.Contracts.Entities;
+using EmployeeRegistration.Data.Contracts.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace EmployeeRegistration.Web.Models
+namespace EmployeeRegistration.Data.Repositories.Repositories
 {
-    public class EmployeeRepository
+    public class EmployeeRepository : IRepository<Employee>
     {
         string connectionString = "Server=.\\SQLEXPRESS;Database=EmployeeRegistrationDb;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-        public IEnumerable<Employee> GetAllEmployees()
+        public IEnumerable<Employee> GetAll()
         {
             List<Employee> employees = new List<Employee>();
 
@@ -29,7 +30,7 @@ namespace EmployeeRegistration.Web.Models
                     employee.Id = Convert.ToInt32(reader["Id"]);
                     employee.Name = reader["Name"].ToString();
                     employee.Surname = reader["Surname"].ToString();
-                    employee.Patronymic = reader["Patronymic"].ToString();
+                    employee.SecondName = reader["SecondName"].ToString();
                     employee.Date = Convert.ToDateTime(reader["Date"]);
                     employee.Position = reader["Position"].ToString();
                     employee.CompanyId = Convert.ToInt32(reader["CompanyId"]);
@@ -42,7 +43,7 @@ namespace EmployeeRegistration.Web.Models
             }
         }
 
-        public void AddEmployee(Employee employee)
+        public void Add(Employee employee)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -51,28 +52,7 @@ namespace EmployeeRegistration.Web.Models
 
                 command.Parameters.AddWithValue("@Name", employee.Name);
                 command.Parameters.AddWithValue("@Surname", employee.Surname);
-                command.Parameters.AddWithValue("@Patronymic", employee.Patronymic);
-                command.Parameters.AddWithValue("@Date", DateTime.Now);
-                command.Parameters.AddWithValue("@Position", employee.Position);
-                command.Parameters.AddWithValue("@CompanyId", employee.CompanyId);
-
-                connection.Open();
-                command.ExecuteNonQuery();
-                connection.Close();
-            }
-        }
-
-        public void UpdateEmployee(Employee employee)
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlCommand command = new SqlCommand("UpdateEmployee", connection);
-                command.CommandType = CommandType.StoredProcedure;
-
-                command.Parameters.AddWithValue("@Id", employee.Id);
-                command.Parameters.AddWithValue("@Name", employee.Name);
-                command.Parameters.AddWithValue("@Surname", employee.Surname);
-                command.Parameters.AddWithValue("@Patronymic", employee.Patronymic);
+                command.Parameters.AddWithValue("@SecondName", employee.SecondName);
                 command.Parameters.AddWithValue("@Date", employee.Date);
                 command.Parameters.AddWithValue("@Position", employee.Position);
                 command.Parameters.AddWithValue("@CompanyId", employee.CompanyId);
@@ -83,14 +63,37 @@ namespace EmployeeRegistration.Web.Models
             }
         }
 
-        public Employee GetEmployee(int? id)
+        public void Update(Employee employee)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand("UpdateEmployee", connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@Id", employee.Id);
+                command.Parameters.AddWithValue("@Name", employee.Name);
+                command.Parameters.AddWithValue("@Surname", employee.Surname);
+                command.Parameters.AddWithValue("@SecondName", employee.SecondName);
+                command.Parameters.AddWithValue("@Date", employee.Date);
+                command.Parameters.AddWithValue("@Position", employee.Position);
+                command.Parameters.AddWithValue("@CompanyId", employee.CompanyId);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
+        public Employee Get(int? id)
         {
             Employee employee = new Employee();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sqlQuery = "SELECT * FROM Employees WHERE ID= " + id;        //TODO: stringBuilder
-                SqlCommand command = new SqlCommand(sqlQuery, connection);
+                StringBuilder sqlQuery = new StringBuilder("SELECT * FROM Employees WHERE ID=");
+                sqlQuery.Append(id);
+
+                SqlCommand command = new SqlCommand(sqlQuery.ToString(), connection);
 
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -100,7 +103,7 @@ namespace EmployeeRegistration.Web.Models
                     employee.Id = Convert.ToInt32(reader["Id"]);
                     employee.Name = reader["Name"].ToString();
                     employee.Surname = reader["Surname"].ToString();
-                    employee.Patronymic = reader["Patronymic"].ToString();
+                    employee.SecondName = reader["SecondName"].ToString();
                     employee.Date = Convert.ToDateTime(reader["Date"]);
                     employee.Position = reader["Position"].ToString();
                     employee.CompanyId = Convert.ToInt32(reader["CompanyId"]);
@@ -111,7 +114,7 @@ namespace EmployeeRegistration.Web.Models
             }
         }
 
-        public void DeleteEmployee(int? id)
+        public void Delete(int? id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

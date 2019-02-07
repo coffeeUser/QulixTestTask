@@ -1,17 +1,18 @@
-﻿using System;
+﻿using EmployeeRegistration.Data.Contracts.Entities;
+using EmployeeRegistration.Data.Contracts.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace EmployeeRegistration.Web.Models
+namespace EmployeeRegistration.Data.Repositories.Repositories
 {
-    public class CompanyRepository
+    public class CompanyRepository : IRepository<Company>
     {
         string connectionString = "Server=.\\SQLEXPRESS;Database=EmployeeRegistrationDb;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-        public IEnumerable<Company> GetAllCompanies()
+        public IEnumerable<Company> GetAll()
         {
             List<Company> companies = new List<Company>();
 
@@ -46,7 +47,7 @@ namespace EmployeeRegistration.Web.Models
             }
         }
 
-        public void AddCompany(Company company)
+        public void Add(Company company)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -56,14 +57,13 @@ namespace EmployeeRegistration.Web.Models
                 command.Parameters.AddWithValue("@Name", company.Name);
                 command.Parameters.AddWithValue("@Form", company.Form);
 
-
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
             }
         }
 
-        public void UpdateCompany(Company company)
+        public void Update(Company company)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -75,21 +75,22 @@ namespace EmployeeRegistration.Web.Models
                 command.Parameters.AddWithValue("@Size", company.Size);
                 command.Parameters.AddWithValue("@Form", company.Form);
 
-
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
             }
         }
 
-        public Company GetCompany(int? id)
+        public Company Get(int? id)
         {
             Company company = new Company();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sqlQuery = "SELECT * FROM Companies WHERE ID= " + id;        //TODO: stringBuilder
-                SqlCommand command = new SqlCommand(sqlQuery, connection);
+                StringBuilder sqlQuery = new StringBuilder("SELECT * FROM Companies WHERE ID=");
+                sqlQuery.Append(id);
+
+                SqlCommand command = new SqlCommand(sqlQuery.ToString(), connection);
 
                 connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
@@ -114,7 +115,7 @@ namespace EmployeeRegistration.Web.Models
             }
         }
 
-        public void DeleteCompany(int? id)
+        public void Delete(int? id)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

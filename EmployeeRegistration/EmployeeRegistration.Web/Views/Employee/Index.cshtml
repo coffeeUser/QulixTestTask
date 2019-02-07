@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EmployeeRegistration.Web.Models.Employee>
+﻿@model IEnumerable<EmployeeRegistration.Domain.Contracts.ViewModels.EmployeeViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,7 +19,7 @@
                 @Html.DisplayNameFor(model => model.Surname)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Patronymic)
+                @Html.DisplayNameFor(model => model.SecondName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Date)
@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.Surname)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Patronymic)
+                @Html.DisplayFor(modelItem => item.SecondName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)

@@ -1,4 +1,4 @@
-﻿@model EmployeeRegistration.Web.Models.Employee
+﻿@model EmployeeRegistration.Domain.Contracts.ViewModels.EmployeeViewModel
 
 @{
     ViewData["Title"] = "Details";
@@ -23,10 +23,10 @@
             @Html.DisplayFor(model => model.Surname)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Patronymic)
+            @Html.DisplayNameFor(model => model.SecondName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Patronymic)
+            @Html.DisplayFor(model => model.SecondName)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Date)

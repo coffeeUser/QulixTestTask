@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeRegistration.Data.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeRegistration.Data.Repositories", "EmployeeRegistration.Data.Repositories\EmployeeRegistration.Data.Repositories.csproj", "{96FD963E-51D1-463A-A401-317AA00A95DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeRegistration.Domain.Contracts", "EmployeeRegistration.Domain.Contracts\EmployeeRegistration.Domain.Contracts.csproj", "{38B5493F-4E50-4F26-B26A-EFE0DE952731}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeRegistration.Domain.Services", "EmployeeRegistration.Domain.Services\EmployeeRegistration.Domain.Services.csproj", "{E66F5EF8-1CCA-4C43-AB17-9C82CCBB14C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{96FD963E-51D1-463A-A401-317AA00A95DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96FD963E-51D1-463A-A401-317AA00A95DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96FD963E-51D1-463A-A401-317AA00A95DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38B5493F-4E50-4F26-B26A-EFE0DE952731}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38B5493F-4E50-4F26-B26A-EFE0DE952731}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38B5493F-4E50-4F26-B26A-EFE0DE952731}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38B5493F-4E50-4F26-B26A-EFE0DE952731}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E66F5EF8-1CCA-4C43-AB17-9C82CCBB14C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E66F5EF8-1CCA-4C43-AB17-9C82CCBB14C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E66F5EF8-1CCA-4C43-AB17-9C82CCBB14C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E66F5EF8-1CCA-4C43-AB17-9C82CCBB14C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{923AA0CB-93C1-47FF-B8AB-BBD4DDBE4500}</ProjectGuid>
+    <ProjectGuid>{E66F5EF8-1CCA-4C43-AB17-9C82CCBB14C0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EmployeeRegistration.Data.Contracts</RootNamespace>
-    <AssemblyName>EmployeeRegistration.Data.Contracts</AssemblyName>
+    <RootNamespace>EmployeeRegistration.Domain.Services</RootNamespace>
+    <AssemblyName>EmployeeRegistration.Domain.Services</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,11 +41,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Company.cs" />
-    <Compile Include="Entities\Employee.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Services\CompanyService.cs" />
+    <Compile Include="Services\EmployeeService.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\EmployeeRegistration.Data.Contracts\EmployeeRegistration.Data.Contracts.csproj">
+      <Project>{923aa0cb-93c1-47ff-b8ab-bbd4ddbe4500}</Project>
+      <Name>EmployeeRegistration.Data.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EmployeeRegistration.Data.Repositories\EmployeeRegistration.Data.Repositories.csproj">
+      <Project>{96FD963E-51D1-463A-A401-317AA00A95DB}</Project>
+      <Name>EmployeeRegistration.Data.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EmployeeRegistration.Domain.Contracts\EmployeeRegistration.Domain.Contracts.csproj">
+      <Project>{38b5493f-4e50-4f26-b26a-efe0de952731}</Project>
+      <Name>EmployeeRegistration.Domain.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

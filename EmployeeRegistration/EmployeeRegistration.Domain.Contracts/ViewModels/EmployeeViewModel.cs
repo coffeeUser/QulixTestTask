@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace EmployeeRegistration.Web.Models
+namespace EmployeeRegistration.Domain.Contracts.ViewModels
 {
-    public class Employee
+    public class EmployeeViewModel
     {
         public int Id { get; set; }
         [Required]
@@ -14,7 +15,7 @@ namespace EmployeeRegistration.Web.Models
         [Required]
         public string Surname { get; set; }
         [Required]
-        public string Patronymic { get; set; }
+        public string SecondName { get; set; }
         public DateTime Date { get; set; }
         [Required]
         public string Position { get; set; }

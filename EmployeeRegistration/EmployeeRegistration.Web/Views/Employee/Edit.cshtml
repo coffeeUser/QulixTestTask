@@ -1,4 +1,4 @@
-﻿@model EmployeeRegistration.Web.Models.Employee
+﻿@model EmployeeRegistration.Domain.Contracts.ViewModels.EmployeeViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -24,9 +24,9 @@
                 <span asp-validation-for="Surname" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Patronymic" class="control-label"></label>
-                <input asp-for="Patronymic" class="form-control" />
-                <span asp-validation-for="Patronymic" class="text-danger"></span>
+                <label asp-for="SecondName" class="control-label"></label>
+                <input asp-for="SecondName" class="form-control" />
+                <span asp-validation-for="SecondName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>

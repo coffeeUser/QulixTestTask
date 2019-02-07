@@ -9,6 +9,10 @@
 /EmployeeRegistration/EmployeeRegistration.Data.Contracts/bin
 /EmployeeRegistration/EmployeeRegistration.Data.Contracts/obj
 /EmployeeRegistration/EmployeeRegistration.Data.Repositories/bin
-/EmployeeRegistration/EmployeeRegistration.Data.repositories/obj
+/EmployeeRegistration/EmployeeRegistration.Data.Repositories/obj
+/EmployeeRegistration/EmployeeRegistration.Domain.Contracts/bin
+/EmployeeRegistration/EmployeeRegistration.Domain.Contracts/obj
+/EmployeeRegistration/EmployeeRegistration.Domain.Services/bin
+/EmployeeRegistration/EmployeeRegistration.Domain.Services/obj
 /EmployeeRegistration/EmployeeRegistration.Web/bin
 /EmployeeRegistration/EmployeeRegistration.Web/obj
