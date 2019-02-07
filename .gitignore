@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+
+
+/EmployeeRegistration/.vs
+/.vs
+/EmployeeRegistration/EmployeeRegistration.Data.Contracts/bin
+/EmployeeRegistration/EmployeeRegistration.Data.Contracts/obj
+/EmployeeRegistration/EmployeeRegistration.Data.Repositories/bin
+/EmployeeRegistration/EmployeeRegistration.Data.repositories/obj
+/EmployeeRegistration/EmployeeRegistration.Web/bin
+/EmployeeRegistration/EmployeeRegistration.Web/obj
