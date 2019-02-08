@@ -1,4 +1,5 @@
 ﻿using EmployeeRegistration.Data.Contracts.Entities;
+using EmployeeRegistration.Data.Contracts.Repositories;
 using EmployeeRegistration.Data.Repositories.Repositories;
 using EmployeeRegistration.Domain.Contracts.Services;
 using EmployeeRegistration.Domain.Contracts.ViewModels;
@@ -8,8 +9,8 @@ namespace EmployeeRegistration.Domain.Services.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly EmployeeRepository employeeRepository;
-        private readonly CompanyRepository companyRepository;
+        private readonly IEmployeeRepository employeeRepository;
+        private readonly ICompanyRepository companyRepository;
 
         public EmployeeService()
         {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using EmployeeRegistration.Domain.Contracts.Services;
 using EmployeeRegistration.Domain.Contracts.ViewModels;
 using EmployeeRegistration.Domain.Services.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -8,8 +9,8 @@ namespace EmployeeRegistration.Web.Controllers
 {
     public class EmployeeController : Controller
     {
-        private readonly EmployeeService employeeService;
-        private readonly CompanyService companyService;
+        private readonly IEmployeeService employeeService;
+        private readonly ICompanyService companyService;
 
         public EmployeeController()
         {

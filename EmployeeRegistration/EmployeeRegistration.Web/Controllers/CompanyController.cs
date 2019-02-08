@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EmployeeRegistration.Domain.Contracts.Services;
 using EmployeeRegistration.Domain.Contracts.ViewModels;
 using EmployeeRegistration.Domain.Services.Services;
 using EmployeeRegistration.Web.Models;
@@ -11,7 +12,7 @@ namespace EmployeeRegistration.Web.Controllers
 {
     public class CompanyController : Controller
     {
-        private readonly CompanyService companyService;
+        private readonly ICompanyService companyService;
 
         public CompanyController()
         {
