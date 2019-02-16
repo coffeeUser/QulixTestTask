@@ -38,7 +38,7 @@
             @Html.DisplayNameFor(model => model.Position)
         </dt>
         <dd>
-            <a asp-action="PositionEmployees" asp-controller="Employee" asp-route-position="@Model.Position">@Html.DisplayFor(model => model.Position)</a>
+            <a asp-action="PositionEmployees" asp-controller="Employee" asp-route-position="@Model.PositionId">@Html.DisplayFor(model => model.Position.Name)</a>
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Company)

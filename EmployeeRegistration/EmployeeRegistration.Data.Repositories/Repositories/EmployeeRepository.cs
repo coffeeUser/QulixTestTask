@@ -15,7 +15,7 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
         {
             List<Employee> employees = new List<Employee>();
 
-            using (SqlConnection connection = new SqlConnection(Consts.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(AppSetting.ConnectionString))
             {
                 SqlCommand command = new SqlCommand("GetAllEmployees", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -27,15 +27,9 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
 
                     while (reader.Read())
                     {
-                        Employee employee = new Employee();
-                        employee.Id = Convert.ToInt32(reader["Id"]);
-                        employee.Name = reader["Name"].ToString();
-                        employee.Surname = reader["Surname"].ToString();
-                        employee.SecondName = reader["SecondName"].ToString();
-                        employee.Date = Convert.ToDateTime(reader["Date"]);
-                        employee.Position = reader["Position"].ToString();
-                        employee.CompanyId = Convert.ToInt32(reader["CompanyId"]);
-
+                        Employee employee = Creator.EmployeeCreator(reader);
+                        employee.Company = Creator.CompanyCreator(reader);
+                        employee.Position = Creator.PositionCreator(reader);
                         employees.Add(employee);
                     }
                 }
@@ -51,7 +45,7 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
 
         public void Add(Employee employee)
         {
-            using (SqlConnection connection = new SqlConnection(Consts.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(AppSetting.ConnectionString))
             {
                 SqlCommand command = new SqlCommand("AddEmployee", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -60,8 +54,8 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
                 command.Parameters.AddWithValue("@Surname", employee.Surname);
                 command.Parameters.AddWithValue("@SecondName", employee.SecondName);
                 command.Parameters.AddWithValue("@Date", employee.Date);
-                command.Parameters.AddWithValue("@Position", employee.Position);
-                command.Parameters.AddWithValue("@CompanyId", employee.CompanyId);
+                command.Parameters.AddWithValue("@Position", employee.PositionId);
+                command.Parameters.AddWithValue("@Company", employee.CompanyId);
 
                 try
                 {
@@ -78,7 +72,7 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
 
         public void Update(Employee employee)
         {
-            using (SqlConnection connection = new SqlConnection(Consts.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(AppSetting.ConnectionString))
             {
                 SqlCommand command = new SqlCommand("UpdateEmployee", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -88,8 +82,8 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
                 command.Parameters.AddWithValue("@Surname", employee.Surname);
                 command.Parameters.AddWithValue("@SecondName", employee.SecondName);
                 command.Parameters.AddWithValue("@Date", employee.Date);
-                command.Parameters.AddWithValue("@Position", employee.Position);
-                command.Parameters.AddWithValue("@CompanyId", employee.CompanyId);
+                command.Parameters.AddWithValue("@Position", employee.PositionId);
+                command.Parameters.AddWithValue("@Company", employee.CompanyId);
 
                 try
                 {
@@ -108,7 +102,7 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
         {
             List<Employee> employees = new List<Employee>();
 
-            using (SqlConnection connection = new SqlConnection(Consts.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(AppSetting.ConnectionString))
             {
                 SqlCommand command = new SqlCommand("GetCompanyEmployees", connection);
                 command.CommandType = CommandType.StoredProcedure;
@@ -122,15 +116,9 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
 
                     while (reader.Read())
                     {
-                        Employee employee = new Employee();
-                        employee.Id = Convert.ToInt32(reader["Id"]);
-                        employee.Name = reader["Name"].ToString();
-                        employee.Surname = reader["Surname"].ToString();
-                        employee.SecondName = reader["SecondName"].ToString();
-                        employee.Date = Convert.ToDateTime(reader["Date"]);
-                        employee.Position = reader["Position"].ToString();
-                        employee.CompanyId = Convert.ToInt32(reader["CompanyId"]);
-
+                        Employee employee = Creator.EmployeeCreator(reader);
+                        employee.Company = Creator.CompanyCreator(reader);
+                        employee.Position = Creator.PositionCreator(reader);
                         employees.Add(employee);
                     }
                 }
@@ -143,16 +131,16 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
             }
         }
 
-        public IEnumerable<Employee> GetEmployeesByPosition(string position)
+        public IEnumerable<Employee> GetEmployeesByPosition(int id)
         {
             List<Employee> employees = new List<Employee>();
 
-            using (SqlConnection connection = new SqlConnection(Consts.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(AppSetting.ConnectionString))
             {
                 SqlCommand command = new SqlCommand("GetEmployeesByPosition", connection);
                 command.CommandType = CommandType.StoredProcedure;
 
-                command.Parameters.AddWithValue("@Position", position);
+                command.Parameters.AddWithValue("@PositionId", id);
 
                 try
                 {
@@ -161,15 +149,9 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
 
                     while (reader.Read())
                     {
-                        Employee employee = new Employee();
-                        employee.Id = Convert.ToInt32(reader["Id"]);
-                        employee.Name = reader["Name"].ToString();
-                        employee.Surname = reader["Surname"].ToString();
-                        employee.SecondName = reader["SecondName"].ToString();
-                        employee.Date = Convert.ToDateTime(reader["Date"]);
-                        employee.Position = reader["Position"].ToString();
-                        employee.CompanyId = Convert.ToInt32(reader["CompanyId"]);
-
+                        Employee employee = Creator.EmployeeCreator(reader);
+                        employee.Company = Creator.CompanyCreator(reader);
+                        employee.Position = Creator.PositionCreator(reader);
                         employees.Add(employee);
                     }
                 }
@@ -185,14 +167,14 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
 
         public Employee Get(int? id)
         {
-            Employee employee = new Employee();
+            Employee employee = null;
 
-            using (SqlConnection connection = new SqlConnection(Consts.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(AppSetting.ConnectionString))
             {
-                StringBuilder sqlQuery = new StringBuilder("SELECT * FROM Employees WHERE ID=");
-                sqlQuery.Append(id);
+                SqlCommand command = new SqlCommand("GetEmployeeById", connection);
+                command.CommandType = CommandType.StoredProcedure;
 
-                SqlCommand command = new SqlCommand(sqlQuery.ToString(), connection);
+                command.Parameters.AddWithValue("@Id", id);
 
                 try
                 {
@@ -201,13 +183,9 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
 
                     while (reader.Read())
                     {
-                        employee.Id = Convert.ToInt32(reader["Id"]);
-                        employee.Name = reader["Name"].ToString();
-                        employee.Surname = reader["Surname"].ToString();
-                        employee.SecondName = reader["SecondName"].ToString();
-                        employee.Date = Convert.ToDateTime(reader["Date"]);
-                        employee.Position = reader["Position"].ToString();
-                        employee.CompanyId = Convert.ToInt32(reader["CompanyId"]);
+                        employee = Creator.EmployeeCreator(reader);
+                        employee.Company = Creator.CompanyCreator(reader);
+                        employee.Position = Creator.PositionCreator(reader);
                     }
                 }
                 finally
@@ -221,7 +199,7 @@ namespace EmployeeRegistration.Data.Repositories.Repositories
 
         public void Delete(int? id)
         {
-            using (SqlConnection connection = new SqlConnection(Consts.ConnectionString))
+            using (SqlConnection connection = new SqlConnection(AppSetting.ConnectionString))
             {
                 SqlCommand command = new SqlCommand("DeleteEmployee", connection);
                 command.CommandType = CommandType.StoredProcedure;

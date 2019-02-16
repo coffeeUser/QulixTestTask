@@ -10,20 +10,26 @@ namespace EmployeeRegistration.Domain.Contracts.ViewModels
     public class EmployeeViewModel
     {
         public int Id { get; set; }
+
         [Required]
         [MaxLength(20)]
         public string Name { get; set; }
+
         [Required]
         [MaxLength(20)]
         public string Surname { get; set; }
+
         [Required]
         [MaxLength(20)]
         public string SecondName { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
+
         [Required(ErrorMessage = "Please, choose position")]
-        [MaxLength(20)]
-        public string Position { get; set; }
+        public int PositionId { get; set; }
+        public PositionViewModel Position { get; set; }
+
         [Required(ErrorMessage = "Please, choose company")]
         public int CompanyId { get; set; }
         public CompanyViewModel Company { get; set; }

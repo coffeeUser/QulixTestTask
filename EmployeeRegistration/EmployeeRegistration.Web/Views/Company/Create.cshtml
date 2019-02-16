@@ -16,7 +16,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="Form" class="control-label"></label>
-                <input asp-for="Form" class="form-control" />
+                <select asp-for="FormId" class="form-control">
+                    @foreach (var form in ViewBag.Forms)
+                    {
+                        <option value="@form.Id">@form.Name</option>
+                    }
+                </select>
                 <span asp-validation-for="Form" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -20,13 +20,13 @@
             @Html.DisplayNameFor(model => model.Size)
         </dt>
         <dd>
-            <a asp-action="CompanyEmployees" asp-controller="Employee" asp-route-id="@Model.Id">@Html.DisplayFor(model => model.Size)</a>
+            <a asp-action="CompanyEmployees" asp-controller="Employee" asp-route-id="@Model.Id">@Model.Employees.Count()</a>
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Form)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Form)
+            @Html.DisplayFor(model => model.Form.Name)
         </dd>
     </dl>
 </div>

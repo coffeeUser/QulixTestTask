@@ -17,6 +17,6 @@ namespace EmployeeRegistration.Data.Contracts.Repositories
         /// <summary>
         /// Gets collection of entries from Employees table with the same position. Used to filter.
         /// </summary>
-        IEnumerable<Employee> GetEmployeesByPosition(string position);
+        IEnumerable<Employee> GetEmployeesByPosition(int id);
     }
 }

@@ -13,7 +13,9 @@ namespace EmployeeRegistration.Data.Contracts.Entities
         public string Surname { get; set; }
         public string SecondName { get; set; }
         public DateTime Date { get; set; }
-        public string Position { get; set; }
+        public int PositionId { get; set; }
+        public Position Position { get; set; }
         public int CompanyId { get; set; }
+        public Company Company { get; set; }
     }
 }

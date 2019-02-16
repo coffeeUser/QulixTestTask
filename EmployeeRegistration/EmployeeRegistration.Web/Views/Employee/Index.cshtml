@@ -49,7 +49,7 @@
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                <a asp-action="PositionEmployees" asp-controller="Employee" asp-route-position="@item.Position">@Html.DisplayFor(modelItem => item.Position)</a>
+                <a asp-action="PositionEmployees" asp-controller="Employee" asp-route-position="@item.PositionId">@Html.DisplayFor(modelItem => item.Position.Name)</a>
             </td>
             <td>
                 <a asp-action="Details" asp-controller="Company" asp-route-id="@item.CompanyId">@Html.DisplayFor(modelItem => item.Company.Name)</a>               

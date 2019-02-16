@@ -34,7 +34,7 @@
                 <a asp-action="CompanyEmployees" asp-controller="Employee" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Size)</a>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Form)
+                @Html.DisplayFor(modelItem => item.Form.Name)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">Edit</a>

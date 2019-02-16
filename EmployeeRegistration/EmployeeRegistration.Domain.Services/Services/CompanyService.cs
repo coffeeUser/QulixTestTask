@@ -3,6 +3,7 @@ using EmployeeRegistration.Data.Contracts.Repositories;
 using EmployeeRegistration.Data.Repositories.Repositories;
 using EmployeeRegistration.Domain.Contracts.Services;
 using EmployeeRegistration.Domain.Contracts.ViewModels;
+using EmployeeRegistration.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,13 +30,7 @@ namespace EmployeeRegistration.Domain.Services.Services
 
             foreach (var company in companies)
             {
-                CompanyViewModel companyViewModel = new CompanyViewModel()
-                {
-                    Id = company.Id,
-                    Name = company.Name,
-                    Size = company.Size,
-                    Form = company.Form
-                };
+                CompanyViewModel companyViewModel = Mapper.CompanyMapper(company);
                 companyViewModels.Add(companyViewModel);
             }
             return companyViewModels;
@@ -43,38 +38,20 @@ namespace EmployeeRegistration.Domain.Services.Services
 
         public void Add(CompanyViewModel model)
         {
-            Company company = new Company()
-            {
-                Id = model.Id,
-                Name = model.Name,
-                Size = model.Size,
-                Form = model.Form
-            };
+            Company company = Mapper.CompanyViewModelMapper(model);
             companyRepository.Add(company);
         }
 
         public void Update(CompanyViewModel model)
         {
-            Company company = new Company()
-            {
-                Id = model.Id,
-                Name = model.Name,
-                Size = model.Size,
-                Form = model.Form
-            };
+            Company company = Mapper.CompanyViewModelMapper(model);
             companyRepository.Update(company);
         }
 
         public CompanyViewModel Get(int? id)
         {
             Company company = companyRepository.Get(id);
-            CompanyViewModel companyViewModel = new CompanyViewModel()
-            {
-                Id = company.Id,
-                Name = company.Name,
-                Size = company.Size,
-                Form = company.Form
-            };
+            CompanyViewModel companyViewModel = Mapper.CompanyMapper(company);
             return companyViewModel;
         }
 

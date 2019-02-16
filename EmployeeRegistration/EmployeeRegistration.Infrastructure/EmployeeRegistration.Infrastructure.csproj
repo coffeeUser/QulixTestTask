@@ -41,8 +41,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppSetting.cs" />
     <Compile Include="Consts.cs" />
+    <Compile Include="Creator.cs" />
+    <Compile Include="Mapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EmployeeRegistration.Data.Contracts\EmployeeRegistration.Data.Contracts.csproj">
+      <Project>{923AA0CB-93C1-47FF-B8AB-BBD4DDBE4500}</Project>
+      <Name>EmployeeRegistration.Data.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EmployeeRegistration.Domain.Contracts\EmployeeRegistration.Domain.Contracts.csproj">
+      <Project>{38B5493F-4E50-4F26-B26A-EFE0DE952731}</Project>
+      <Name>EmployeeRegistration.Domain.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

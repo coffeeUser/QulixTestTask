@@ -36,7 +36,7 @@ namespace EmployeeRegistration.Domain.Contracts.Services
         /// <summary>
         /// Gets collection of entries from Employees table with the same position. Used to filter.
         /// </summary>
-        IEnumerable<EmployeeViewModel> GetEmployeesByPosition(string position);
+        IEnumerable<EmployeeViewModel> GetEmployeesByPosition(int id);
 
         /// <summary>
         /// Gets one entry with specific Id from Employees table.

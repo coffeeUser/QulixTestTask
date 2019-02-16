@@ -13,10 +13,12 @@ namespace EmployeeRegistration.Web.Controllers
     public class CompanyController : Controller
     {
         private readonly ICompanyService companyService;
+        private readonly IFormService formService;
 
         public CompanyController()
         {
             companyService = new CompanyService();
+            formService = new FormService();
         }
 
         public IActionResult Index()
@@ -29,6 +31,7 @@ namespace EmployeeRegistration.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            ViewBag.Forms = formService.GetAll();
             return View();
         }
 
@@ -56,6 +59,7 @@ namespace EmployeeRegistration.Web.Controllers
             {
                 return NotFound();
             }
+            ViewBag.Forms = formService.GetAll();
             return View(company);
         }
         [HttpPost]

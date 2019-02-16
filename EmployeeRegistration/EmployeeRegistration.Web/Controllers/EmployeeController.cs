@@ -11,11 +11,13 @@ namespace EmployeeRegistration.Web.Controllers
     {
         private readonly IEmployeeService employeeService;
         private readonly ICompanyService companyService;
+        private readonly IPositionService positionService;
 
         public EmployeeController()
         {
             employeeService = new EmployeeService();
             companyService = new CompanyService();
+            positionService = new PositionService();
         }
 
         public IActionResult Index()
@@ -32,7 +34,7 @@ namespace EmployeeRegistration.Web.Controllers
             return View("Index", employees);
         }
 
-        public IActionResult PositionEmployees(string position)
+        public IActionResult PositionEmployees(int position)
         {
             List<EmployeeViewModel> employees = new List<EmployeeViewModel>();
             employees = employeeService.GetEmployeesByPosition(position).ToList();
@@ -43,6 +45,7 @@ namespace EmployeeRegistration.Web.Controllers
         public IActionResult Create()
         {
             ViewBag.Companies = companyService.GetAll();
+            ViewBag.Positions = positionService.GetAll();
             return View();
         }
 
@@ -71,6 +74,7 @@ namespace EmployeeRegistration.Web.Controllers
                 return NotFound();
             }
             ViewBag.Companies = companyService.GetAll();
+            ViewBag.Positions = positionService.GetAll();
             return View(employee);
         }
         [HttpPost]
