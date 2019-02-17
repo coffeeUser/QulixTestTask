@@ -16,7 +16,7 @@ namespace EmployeeRegistration.Infrastructure
             CompanyViewModel company = new CompanyViewModel();
             company.Id = model.Id;
             company.Name = model.Name;
-            company.Size = model.Size;
+            company.Size = model.Employees.Count();
             company.FormId = model.FormId;
             if (model.Form != null)
             {
@@ -77,7 +77,7 @@ namespace EmployeeRegistration.Infrastructure
             Company company = new Company();
             company.Id = model.Id;
             company.Name = model.Name;
-            company.Size = model.Size;
+            company.Size = model.Employees.Count();
             company.FormId = model.FormId;
             if (model.Form != null)
             {

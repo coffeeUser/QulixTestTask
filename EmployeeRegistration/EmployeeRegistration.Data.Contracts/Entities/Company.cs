@@ -17,6 +17,6 @@ namespace EmployeeRegistration.Data.Contracts.Entities
         public int Size { get; set; }
         public int FormId { get; set; }
         public Form Form { get; set; }
-        public IEnumerable<Employee> Employees { get; set; }
+        public List<Employee> Employees { get; set; }
     }
 }

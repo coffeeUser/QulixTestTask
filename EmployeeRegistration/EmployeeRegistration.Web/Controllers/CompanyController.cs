@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EmployeeRegistration.Domain.Contracts.Services;
 using EmployeeRegistration.Domain.Contracts.ViewModels;
+using EmployeeRegistration.Domain.Services;
 using EmployeeRegistration.Domain.Services.Services;
 using EmployeeRegistration.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,7 @@ namespace EmployeeRegistration.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Forms = formService.GetAll();
+            ViewBag.Forms = SelectHelper.GetForms();
             return View();
         }
 
@@ -42,8 +43,10 @@ namespace EmployeeRegistration.Web.Controllers
             if (ModelState.IsValid)
             {
                 companyService.Add(company);
+                SelectHelper.Companies = null;
                 return RedirectToAction("Index");
             }
+            ViewBag.Forms = SelectHelper.GetForms();
             return View(company);
         }
 
@@ -59,7 +62,7 @@ namespace EmployeeRegistration.Web.Controllers
             {
                 return NotFound();
             }
-            ViewBag.Forms = formService.GetAll();
+            ViewBag.Forms = SelectHelper.GetForms();
             return View(company);
         }
         [HttpPost]
@@ -75,6 +78,7 @@ namespace EmployeeRegistration.Web.Controllers
                 companyService.Update(company);
                 return RedirectToAction("Index");
             }
+            ViewBag.Forms = SelectHelper.GetForms();
             return View(company);
         }
 
@@ -113,6 +117,7 @@ namespace EmployeeRegistration.Web.Controllers
         public IActionResult DeleteConfirmed(int? id)
         {
             companyService.Delete(id);
+            SelectHelper.Companies = null;
             return RedirectToAction("Index");
         }
     }

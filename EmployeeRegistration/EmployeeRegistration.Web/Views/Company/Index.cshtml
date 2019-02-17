@@ -31,7 +31,7 @@
                 <a asp-action="Details" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Name)</a>                
             </td>
             <td>               
-                <a asp-action="CompanyEmployees" asp-controller="Employee" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Size)</a>
+                <a asp-action="CompanyEmployees" asp-controller="Employee" asp-route-id="@item.Id">@item.Employees.Count()</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Form.Name)

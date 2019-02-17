@@ -27,14 +27,6 @@ namespace EmployeeRegistration.Domain.Services.Services
             foreach (var employee in employees)
             {
                 EmployeeViewModel employeeViewModel = Mapper.EmployeeMapper(employee);
-                //Company company = companyRepository.Get(employee.CompanyId);
-                //employeeViewModel.Company = new CompanyViewModel()
-                //{
-                //    Id = company.Id,
-                //    Name = company.Name,
-                //    Size = company.Size,
-                //    Form = company.Form
-                //};
                 employeeViewModels.Add(employeeViewModel);
             }
 
@@ -44,28 +36,22 @@ namespace EmployeeRegistration.Domain.Services.Services
         public void Add(EmployeeViewModel model)
         {
             Employee employee = Mapper.EmployeeViewModelMapper(model);
-
             employeeRepository.Add(employee);
-            Company company = companyRepository.Get(model.CompanyId);
-            company.Size = ++company.Size;
-            companyRepository.Update(company);
+            companyRepository.UpdateSize(model.CompanyId);
         }
 
         public void Update(EmployeeViewModel model)
         {
             Employee employeeEntity = employeeRepository.Get(model.Id);
+            Employee employee = Mapper.EmployeeViewModelMapper(model);
+            employeeRepository.Update(employee);
+
             if (model.CompanyId != employeeEntity.CompanyId)
             {
-                Company company = companyRepository.Get(employeeEntity.CompanyId);
-                company.Size = --company.Size;
-                companyRepository.Update(company);
-                company = companyRepository.Get(model.CompanyId);
-                company.Size = ++company.Size;
-                companyRepository.Update(company);
+                companyRepository.UpdateSize(model.CompanyId);
+                companyRepository.UpdateSize(employeeEntity.CompanyId);
             }
-            Employee employee = Mapper.EmployeeViewModelMapper(model);
-
-            employeeRepository.Update(employee);           
+          
         }
 
         public IEnumerable<EmployeeViewModel> GetCompanyEmployees(int? companyId)
@@ -76,14 +62,6 @@ namespace EmployeeRegistration.Domain.Services.Services
             foreach (var employee in employees)
             {
                 EmployeeViewModel employeeViewModel = Mapper.EmployeeMapper(employee);
-                //Company company = companyRepository.Get(employee.CompanyId);
-                //employeeViewModel.Company = new CompanyViewModel()
-                //{
-                //    Id = company.Id,
-                //    Name = company.Name,
-                //    Size = company.Size,
-                //    Form = company.Form
-                //};
                 employeeViewModels.Add(employeeViewModel);
             }
 
@@ -98,14 +76,6 @@ namespace EmployeeRegistration.Domain.Services.Services
             foreach (var employee in employees)
             {
                 EmployeeViewModel employeeViewModel = Mapper.EmployeeMapper(employee);
-                //Company company = companyRepository.Get(employee.CompanyId);
-                //employeeViewModel.Company = new CompanyViewModel()
-                //{
-                //    Id = company.Id,
-                //    Name = company.Name,
-                //    Size = company.Size,
-                //    Form = company.Form
-                //};
                 employeeViewModels.Add(employeeViewModel);
             }
 
@@ -116,24 +86,14 @@ namespace EmployeeRegistration.Domain.Services.Services
         {
             Employee employee = employeeRepository.Get(id);
             EmployeeViewModel employeeViewModel = Mapper.EmployeeMapper(employee);
-            //Company company = companyRepository.Get(employee.CompanyId);
-            //employeeViewModel.Company = new CompanyViewModel()
-            //{
-            //    Id = company.Id,
-            //    Name = company.Name,
-            //    Size = company.Size,
-            //    Form = company.Form
-            //};
             return employeeViewModel;
         }
 
         public void Delete(int? id)
         {
             Employee employee = employeeRepository.Get(id);
-            Company company = companyRepository.Get(employee.CompanyId);
-            company.Size = --company.Size;
-            companyRepository.Update(company);
             employeeRepository.Delete(id);
+            companyRepository.UpdateSize(employee.CompanyId);
         }
     }
 }

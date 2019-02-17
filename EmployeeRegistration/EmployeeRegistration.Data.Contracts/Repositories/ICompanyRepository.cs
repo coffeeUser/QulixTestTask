@@ -9,5 +9,6 @@ namespace EmployeeRegistration.Data.Contracts.Repositories
 {
     public interface ICompanyRepository : IRepository<Company>
     {
+        void UpdateSize(int? id);
     }
 }

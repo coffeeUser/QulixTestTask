@@ -2,6 +2,7 @@
 using System.Linq;
 using EmployeeRegistration.Domain.Contracts.Services;
 using EmployeeRegistration.Domain.Contracts.ViewModels;
+using EmployeeRegistration.Domain.Services;
 using EmployeeRegistration.Domain.Services.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,8 +45,8 @@ namespace EmployeeRegistration.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Companies = companyService.GetAll();
-            ViewBag.Positions = positionService.GetAll();
+            ViewBag.Companies = SelectHelper.GetCompanies();
+            ViewBag.Positions = SelectHelper.GetPositions();
             return View();
         }
 
@@ -58,6 +59,8 @@ namespace EmployeeRegistration.Web.Controllers
                 employeeService.Add(employee);
                 return RedirectToAction("Index");
             }
+            ViewBag.Companies = SelectHelper.GetCompanies();
+            ViewBag.Positions = SelectHelper.GetPositions();
             return View(employee);
         }
 
@@ -73,8 +76,8 @@ namespace EmployeeRegistration.Web.Controllers
             {
                 return NotFound();
             }
-            ViewBag.Companies = companyService.GetAll();
-            ViewBag.Positions = positionService.GetAll();
+            ViewBag.Companies = SelectHelper.GetCompanies();
+            ViewBag.Positions = SelectHelper.GetPositions();
             return View(employee);
         }
         [HttpPost]
@@ -90,6 +93,8 @@ namespace EmployeeRegistration.Web.Controllers
                 employeeService.Update(employee);
                 return RedirectToAction("Index");
             }
+            ViewBag.Companies = SelectHelper.GetCompanies();
+            ViewBag.Positions = SelectHelper.GetPositions();
             return View(employee);
         }
 

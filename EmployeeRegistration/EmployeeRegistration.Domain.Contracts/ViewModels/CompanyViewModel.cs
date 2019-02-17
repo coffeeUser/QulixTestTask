@@ -16,18 +16,17 @@ namespace EmployeeRegistration.Domain.Contracts.ViewModels
 
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(20)]
+        [Required(ErrorMessage = "Please, enter the name of company")]
+        [MaxLength(20, ErrorMessage = "Max length 20 characters")]
         public string Name { get; set; }
 
         public int Size { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please, choose the form")]
         public int FormId { get; set; }
 
-        [MaxLength(20)]
         public FormViewModel Form { get; set; }
 
-        public IEnumerable<EmployeeViewModel> Employees { get; set; }
+        public List<EmployeeViewModel> Employees { get; set; }
     }
 }
